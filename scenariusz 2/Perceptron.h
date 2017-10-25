@@ -14,21 +14,22 @@ using namespace std;
 
 class Perceptron
 {
-	int tab_wej[20][24];
-	float tab_wag[24];
-	int tab_wyn_ocz[20];
-	int ilosc_wejsc;
-	bool wynik;
-	float wspolczynnik_nauki;
+	int tab_wej[20][24];  //tablica tab[n][m] gdzie n to ilosc danych uczacych a m to ilosc znakow w kazdej danej
+	float tab_wag[24];	//tablica zawierajaca wagi dla kazdego wejscia do perceptronu
+	int tab_wyn_ocz[20];	//tablica zawiera oczekiwane wyniki (1 lub 0) dla danych uczacych
+	int ilosc_wejsc;	//ilosc wejsc w zaleznosci od rozmiaru pojedynczej danej wejsciowej
+	bool wynik;	//wynik po sprawdzeniu przez funkcje sprawdz(int tab[]) true albo false
+	float wspolczynnik_nauki;	//wspolczynnik nauki w funkcji ucz()
 
 	
 
 public:
-	Perceptron();
-	void wczytanie_danych();
-	void losuj_wagi();
-	float licz_wyjscia(int i);
-	void ucz();
-	void sprawdz(int tab[]);
-	void wypisz();
+	Perceptron();	//konstruktor domyslny, zawiera ustawienie danych domyslnych oraz funkcje wczytania danych
+	void wczytanie_danych();	//wczytanie danych z pliku
+	void losuj_wagi();	// losowanie wag z przedzia³u od 0 do 1
+	float licz_wyjscia(int i); //funkcja sumuj¹ca perceptronu
+	void ucz();	//funkcja uczaca na podstawie roznicy wyniku tymczasowego i wyniku oczekiwanego
+	void sprawdz(int tab[]);	//funkcja sprawdzajaca po zakonczeniu procesu uczenia
+	void wypisz();	//wypisanie wyniku sprawdzania
+	~Perceptron();	//destruktor domyslny
 };
