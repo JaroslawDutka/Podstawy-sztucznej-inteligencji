@@ -17,11 +17,9 @@ class Perceptron
 	int tab_wej[20][24];  //tablica tab[n][m] gdzie n to ilosc danych uczacych a m to ilosc znakow w kazdej danej
 	float tab_wag[24];	//tablica zawierajaca wagi dla kazdego wejscia do perceptronu
 	int tab_wyn_ocz[20];	//tablica zawiera oczekiwane wyniki (1 lub 0) dla danych uczacych
-	int ilosc_wejsc;	//ilosc wejsc w zaleznosci od rozmiaru pojedynczej danej wejsciowej
+	int ilosc_wejsc;	//ilosc wejsc w zaleznosci od podanj ilosci danych wejsciowych
 	bool wynik;	//wynik po sprawdzeniu przez funkcje sprawdz(int tab[]) true albo false
 	float wspolczynnik_nauki;	//wspolczynnik nauki w funkcji ucz()
-
-	
 
 public:
 	Perceptron();	//konstruktor domyslny, zawiera ustawienie danych domyslnych oraz funkcje wczytania danych

@@ -3,7 +3,7 @@
 
 Perceptron::Perceptron()
 {
-	this->ilosc_wejsc = 20; //ustawienie wynika z przygotowanych danych uczacych
+	this->ilosc_wejsc = 15; //ustawienie wynika z przygotowanych danych uczacych
 	this->wspolczynnik_nauki = 0.1; 
 
 	wczytanie_danych();	//wczytanie danych z pliku tekstowego
@@ -63,12 +63,12 @@ void Perceptron::ucz()
 	int epoka = 0;	//liczba epok nauczania
 	int przypadek;	//indek elementu tab_wej, ktory jest obecnie rozpatrywany
 	float wynik_tmp;	//przechowuje tymczasowy wynik, ktory jest obliczany w kazdej iteracji
-	float prog = 2.663; //zmienna, ktora okresla, kiedy algorytm jest juz wystaczajaco nauczony
+	float prog = 1.55; //zmienna, ktora okresla, kiedy algorytm jest juz wystaczajaco nauczony
 
 	do 
 	{
 		blad_globalny = 0;
-		for (przypadek = 0; przypadek < 20; przypadek++) 
+		for (przypadek = 0; przypadek < this->ilosc_wejsc; przypadek++) 
 		{
 			/*OBLICZANIE WYNIKU W ITERACJI */
 			wynik_tmp = licz_wyjscia(przypadek);
@@ -76,7 +76,7 @@ void Perceptron::ucz()
 			
 			/*AKTALIZACJA WAG*/
 			
-			for (int i = 0; i < this->ilosc_wejsc; i++)
+			for (int i = 0; i < 24; i++)
 			{
 				this->tab_wag[i] += this->wspolczynnik_nauki * blad_lokalny * this->tab_wej[przypadek][i];
 			}
