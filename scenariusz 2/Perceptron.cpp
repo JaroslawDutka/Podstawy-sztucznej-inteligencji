@@ -3,8 +3,8 @@
 
 Perceptron::Perceptron()
 {
-	this->ilosc_wejsc = 15; //ustawienie wynika z przygotowanych danych uczacych
-	this->wspolczynnik_nauki = 0.1; 
+	this->ilosc_wejsc = 10; //ustawienie wynika z przygotowanych danych uczacych
+	this->wspolczynnik_nauki = 0.05; 
 
 	wczytanie_danych();	//wczytanie danych z pliku tekstowego
 }
@@ -56,8 +56,8 @@ float Perceptron::licz_wyjscia(int i)
 	return suma;
 }
 
-void Perceptron::ucz()
-{
+void Perceptron::Widrow_Hoff()
+{	
 	float blad_lokalny;	//zmienna do obliczania bledu lokalnego
 	float blad_globalny = 0;	//zmienna do oblioczania bledu globalnego, musi byc zainicjowana!
 	int epoka = 0;	//liczba epok nauczania
@@ -110,12 +110,12 @@ void Perceptron::sprawdz(int tab[])
 void Perceptron::wypisz()
 {
 	if (this->wynik == true)
-		cout << "Podana jest ma³a litera!" << endl << endl;
+		cout << "Podana jest ma³a litera!" << endl;
 	else
-		cout << "Podana jest du¿a litera!" << endl << endl;
+		cout << "Podana jest du¿a litera!" << endl;
 }
 
 Perceptron::~Perceptron()
 {
+	cout << "***********Usuwam obiekt***********" << endl;
 }
-
