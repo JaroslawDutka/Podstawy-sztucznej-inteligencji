@@ -4,53 +4,48 @@
 
 using namespace std;
 
-void loadData(bool **tab);
+void loadData(bool **tab); /*wczytanie danych ucz¹cych*/
 
 int main()
 {
 	setlocale(LC_ALL, "");
 
 	int epochs = 0; //licznik epok
-	int userAnswer;
+	int userAnswer; /*iloœæ epok jak¹ chce przeprowadziæ u¿ytkownik*/
 
+	/*Tworzenie dynamicznej tablicy dwuwymiarowej do przechowania danych ucz¹cych*/
 	bool** data = new bool*[numeberOfData];
 	for (int i = 0; i < numeberOfData; i++)
 	{
 		data[i] = new bool[numberOfPixels];
 	}
-	Neuron neuron;
-	bool letter[numberOfPixels] = { 0 };
-	char charLetters[numeberOfData] = { 'A','a','B','b','C','c','D','d','E','e','Z','z','R','r','K','k','H','h','L','l' };
+	/*******************************************************************************/
+	Neuron neuron; /*stworzenie domyœlnego neuronu*/
+	bool letter[numberOfPixels] = { 0 }; /*tablica do przechowywania wyników dla poszczególnych liter*/
+	char charLetters[numeberOfData] = { 'A','a','B','b','C','c','D','d','E','e','Z','z','R','r','K','k','H','h','L','l' };/*litery do wydruku*/
 
-	loadData(data);
-
-	/*cout << "Zestaw ucz¹cy: " << endl;
-	for (int i = 0; i < numeberOfData; i++)
-	{
-		for (int j = 0; j < numberOfPixels; j++)
-		{
-			cout << data[i][j];
-			if (j % 4 == 3 && j != 0)cout << endl;
-		}
-	}
-	cout << endl << "Wciœnij ENTER";
-	_getch();*/
+	loadData(data); /*³adowanie danych ucz¹cych do tablicy data*/
+	
 	neuron.showNeuron();
-	cout << endl << "Wciœnij ENTER";
+	cout << endl << "Wciœnij dowolny klawisz...";
 	_getch();
 
-	char znak = '0';
+	char znak = '0'; /*zmienna char do obs³ugi menu*/
 	while (true)
 	{
 		system("cls");
-		cout << "Algorytm Hebba z wspó³czynnikiem zapominania wciœnij 1" << endl
-			<< "Algorytm Hebba bez wspólczynnika zapominania wciœnij 2" << endl
-			<< "Wyœwietl pogrupowanie wcisnij 3" << endl
-			<< "Wyjscie wcisnij 0" << endl;
-		cin >> znak;
+		cout <<"_______________________________________________________" << endl;
+		cout <<"|________________________MENU_________________________|" << endl;
+		cout <<"|Algorytm Hebba z wspó³czynnikiem zapominania   |  1  |" << endl
+			<< "|Algorytm Hebba bez wspólczynnika zapominania   |  2  |" << endl
+			<< "|Wyœwietl pogrupowanie                          |  3  |" << endl
+			<< "|Reset danych                                   |  4  |" << endl
+			<< "|Wyjœcie                                        |  0  |" << endl
+			<< "|_____________________________________________________|"<<endl;
+		cout<<endl << "Twój wybór >> "; cin >> znak;
 		switch (znak)
 		{
-		case '1':
+		case '1': /*uczenie z wspó³czynnikiem zapominania*/
 		{
 			cout << "Ile epok nauczania przeprowadziæ? >> "; cin >> userAnswer;
 			for (int i = 0; i < userAnswer; i++)
@@ -59,11 +54,12 @@ int main()
 				epochs++;
 			}
 			neuron.showNeuron();
-			cout << endl << "Wciœnij ENTER";
+			cout << endl << "Wciœnij dowolny klawisz...";
 			_getch();
 		}
 		break;
-		case '2':
+
+		case '2': /*uczenie bez wspó³czynnika nauczania*/
 		{
 			cout << "Ile epok nauczania przeprowadziæ? >> "; cin >> userAnswer;
 			for (int i = 0; i < userAnswer; i++)
@@ -72,12 +68,12 @@ int main()
 				epochs++;
 			}
 			neuron.showNeuron();
-			cout << endl << "Wciœnij ENTER";
+			cout << endl << "Wciœnij dowolny klawisz...";
 			_getch();
 		}
 		break;
 		
-		case '3':
+		case '3': /*wyœwietl wyniki po uczeniu*/
 		{
 			cout << endl << "Wyniki po " << epochs << " epokach:" << endl;
 		for (int i = 0; i < numeberOfData; i++)
@@ -89,19 +85,34 @@ int main()
 			neuron.setNeuronInputs(letter);
 			cout << charLetters[i] << " - " << neuron.getMembraneSum() << setprecision(4) << endl;
 		}
-		cout << endl << "Wciœnij ENTER";
+		cout << endl << "Wciœnij dowolny klawisz...";
 		_getch();
 		}
 		break;
-		case '0':
+
+		case '4': /*zresetuj program*/
 		{
+			for (int i = 0; i < numeberOfData; i++)
+			{
+				letter[i] = 0;
+				neuron = Neuron();
+				epochs = 0;
+			}
+		}
+		break;
+
+		case '0':/*wykjscie z programu*/
+		{
+			cout <<endl<< "Wyjœcie z programu...";
+			Sleep(2000);
 			exit(0);
 		}
 		break;
-		default:
+
+		default: /*nepoprawny klawisz*/
 		{
 			cout << "Wciœniêto nieprawid³owy klawisz!" << endl;
-			cout << endl << "Wciœnij ENTER";
+			cout << endl << "Wciœnij dowolny klawisz...";
 			_getch();
 		}
 
@@ -134,7 +145,7 @@ void loadData(bool **tab)
 	if (!plik.good()) //jesli nie mozna otworzyc pliku to wypisz blad
 	{
 		cerr << "Nie mo¿na otworzyæ pliku Ÿród³owego!" << endl
-		<< "blad #" << plik.fail() << endl << endl;
+		<< "Error #" << plik.fail() << endl << endl;
 		system("PAUSE");
 		exit(1);	//jesli nie udalo sie otworzyc pliku to zakoncza dzialanie calego programu
 	}

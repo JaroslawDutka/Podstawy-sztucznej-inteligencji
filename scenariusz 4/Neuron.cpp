@@ -1,7 +1,7 @@
 #include "Neuron.h"
 
-#define learningRate  0.05
-#define forgetRate  0.005
+#define learningRate  0.1
+#define forgetRate  0.01
 #define numberOfData  20
 
 using namespace std;
@@ -9,7 +9,7 @@ using namespace std;
 #pragma region Constructors&Destructors
 Neuron::Neuron()
 {
-	size = 20;
+	size = 24;
 	input = new bool[size];
 	weight = new double[size];
 	srand(time(NULL));
@@ -17,7 +17,7 @@ Neuron::Neuron()
 	for (int i = 0; i < size; i++)
 	{
 		input[i] = 0;
-		weight[i] = (rand() % 100) / 200.0; //losowanie od 0 do 1
+		weight[i] = (rand() % 100) / 200.0; //losowanie od 0 do 0.5
 	}
 }
 
@@ -73,7 +73,7 @@ void Neuron::setNeuronInputs(bool * tab)
 
 void Neuron::teach(bool ** tab)
 {
-	double answer = 0.0;
+	long double answer = 0.0;
 
 	for (int i = 0; i < numberOfData; i++)
 	{
@@ -91,7 +91,7 @@ void Neuron::teach(bool ** tab)
 
 void Neuron::forgetTeach(bool ** tab)
 {
-	double answer = 0.0;
+	long double answer = 0.0;
 
 	for (int i = 0; i < numberOfData; i++)
 	{
@@ -107,14 +107,13 @@ void Neuron::forgetTeach(bool ** tab)
 	}
 }
 
-
 double Neuron::getMembraneSum()
 {
 	if (size == 0)
 		return -1;
 	else
 	{
-		double sum = 0.0;
+		long double sum = 0.0;
 
 		for (int i = 0; i < size; i++)		
 			sum += input[i] * weight[i];
@@ -123,25 +122,14 @@ double Neuron::getMembraneSum()
 	}
 }
 
-double Neuron::activationFunction()
-{
-	double x = getMembraneSum();
-	if (x >= 4.5)
-		return 1.0;
-	return 0.0;
-}
-
 void Neuron::showNeuron()
 {
 	{
-		//std::cout << "_____MÓJ NEURON_____" << std::endl;
 		for (int i = 0; i < size; i++)
 		{
 			cout << i << "  INPUT: " << input[i] << "  WEIGHT: " << weight[i] << endl;
 		}
-		//std::cout << "_________________________" << std::endl;
-		cout << "| SUMA:     |   " << getMembraneSum() << endl<<endl;
-		//std::cout << "_________________________" << std::endl;
+		cout << "SUMA = " << getMembraneSum() << endl<<endl;
 	}
 }
 #pragma endregion
