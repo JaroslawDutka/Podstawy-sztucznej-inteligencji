@@ -6,6 +6,8 @@ using namespace std;
 
 void loadData(bool **tab); /*wczytanie danych ucz¹cych*/
 
+void assign(bool* letter, bool **tab, Neuron *ptr);
+
 int main()
 {
 	setlocale(LC_ALL, "");
@@ -21,6 +23,7 @@ int main()
 	}
 	/*******************************************************************************/
 	Neuron neuron; /*stworzenie domyœlnego neuronu*/
+	Neuron *ptr = &neuron;
 	bool letter[numberOfPixels] = { 0 }; /*tablica do przechowywania wyników dla poszczególnych liter*/
 	char charLetters[numeberOfData] = { 'A','a','B','b','C','c','D','d','E','e','Z','z','R','r','K','k','H','h','L','l' };/*litery do wydruku*/
 
@@ -36,17 +39,18 @@ int main()
 		system("cls");
 		cout <<"_______________________________________________________" << endl;
 		cout <<"|________________________MENU_________________________|" << endl;
-		cout <<"|Algorytm Hebba z wspó³czynnikiem zapominania   |  1  |" << endl
-			<< "|Algorytm Hebba bez wspólczynnika zapominania   |  2  |" << endl
-			<< "|Wyœwietl pogrupowanie                          |  3  |" << endl
-			<< "|Reset danych                                   |  4  |" << endl
-			<< "|Wyjœcie                                        |  0  |" << endl
-			<< "|_____________________________________________________|"<<endl;
+		cout <<"| 1 | Algorytm Hebba z wspó³czynnikiem zapominania    |" << endl
+			<< "| 2 | Algorytm Hebba bez wspólczynnika zapominania    |" << endl
+			<< "| 3 | Wyœwietl pogrupowanie                           |" << endl
+			<< "| 4 | Reset danych                                    |" << endl
+			<< "| 5 | Wyjœcie                                         |" << endl
+			<< "|___|_________________________________________________|"<<endl;
 		cout<<endl << "Twój wybór >> "; cin >> znak;
 		switch (znak)
 		{
 		case '1': /*uczenie z wspó³czynnikiem zapominania*/
 		{
+			assign(letter, data, ptr);
 			cout << "Ile epok nauczania przeprowadziæ? >> "; cin >> userAnswer;
 			for (int i = 0; i < userAnswer; i++)
 			{
@@ -61,6 +65,7 @@ int main()
 
 		case '2': /*uczenie bez wspó³czynnika nauczania*/
 		{
+			assign(letter, data, ptr);
 			cout << "Ile epok nauczania przeprowadziæ? >> "; cin >> userAnswer;
 			for (int i = 0; i < userAnswer; i++)
 			{
@@ -92,19 +97,27 @@ int main()
 
 		case '4': /*zresetuj program*/
 		{
+			system("cls");
 			for (int i = 0; i < numeberOfData; i++)
 			{
 				letter[i] = 0;
-				neuron = Neuron();
-				epochs = 0;
 			}
+			neuron = Neuron();
+			epochs = 0;
+			loadData(data);
+			cout << "Resetowanie ustawieñ i losowanie wag..." << endl;
+			Sleep(1000);
+			system("cls");
+			cout << "Resetowanie ustawieñ zakoñczone sukcesem!" << endl;
+			Sleep(1000);
 		}
 		break;
 
 		case '0':/*wykjscie z programu*/
 		{
-			cout <<endl<< "Wyjœcie z programu...";
-			Sleep(2000);
+			system("cls");
+			cout << "Wyjœcie z programu...";
+			Sleep(1500);
 			exit(0);
 		}
 		break;
@@ -162,4 +175,16 @@ void loadData(bool **tab)
 		}
 	}
 	plik.close();
+}
+
+void assign(bool *letter, bool** tab, Neuron *ptr)
+{
+	for (int i = 0; i < numeberOfData; i++)
+	{
+		for (int j = 0; j < numberOfPixels; j++)
+		{
+			letter[j] = tab[i][j]; /*dla ustawienia wejsc neuronu robie to przypisanie*/
+		}
+	}
+	ptr->setNeuronInputs(letter);
 }

@@ -1,6 +1,6 @@
 #include "Neuron.h"
 
-#define learningRate  0.1
+#define learningRate  0.005
 #define forgetRate  0.01
 #define numberOfData  20
 
@@ -84,7 +84,7 @@ void Neuron::teach(bool ** tab)
 		for (int j = 0; j < size; j++)
 		{
 			answer = getMembraneSum();
-			weight[j] = weight[j] /** (1 - forgetRate)*/ + (learningRate * input[j] * answer);
+			weight[j] += (learningRate * input[j] * answer);
 		}
 	}
 }
